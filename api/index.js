@@ -1,8 +1,26 @@
-import express from 'express'
- 
-const app = express();
+import express from 'express';
+import mongoose from 'mongoose'
+import dotenv from 'dotenv';
+dotenv.config();
 
-app.listen(3000,() =>{
-    console.log("server running on port no 3000");
+mongoose.connect(process.env.MONGO).then(() =>{
+    console.log("connected to db");
+    
+}).catch((err) =>{
+    console.log(err);
     
 })
+
+
+
+const app = express();
+const PORT = 3000;
+
+// Define a route for the root URL
+app.get('/', (req, res) => {
+    res.send('Welcome to the server!');
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
