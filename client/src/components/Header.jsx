@@ -9,10 +9,10 @@ export default function Header() {
        
         <h1 className='font-bold text-sm sm:text-xl'>
             <span className='text-slate-500'>
-                Harsh 
+            Estate
             </span>
             <span className='text-slate-700'>
-                Estate
+            Finder
             </span>
         </h1>   
         </Link>
