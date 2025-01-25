@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useState } from 'react';
 import {app} from '../firebase';
-import { updateUserStart, updateUserSuccess , updateUserFailure } from "../redux/user/userSlice";
+import { updateUserStart, updateUserSuccess , updateUserFailure, deleteUserFailure, deleteUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -63,7 +63,22 @@ import { useDispatch } from "react-redux";
       
       }
     }
-  
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success == false){
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
     // console.log(formData);
   
     return (
@@ -106,14 +121,20 @@ import { useDispatch } from "react-redux";
           </button>
         </form>
         <div className="flex justify-between mt-5">
-          <button className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-200 cursor-pointer">
+          <button  onClick={handleDeleteUser} className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition duration-200 cursor-pointer">
             Delete account
           </button>
           <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-200 cursor-pointer">
             Sign Out
           </button>
         </div>
-        <p className="text-green-700 mt-5">{updateSuccess ? 'Success' : 'User is Updated Succesfully'}</p>
+        <p className="text-green-700 mt-5">
+  {updateSuccess ? 'Success' : 'User is Updated Successfully'}
+</p>
+
+
+  
+
       </div>
     );
   }
