@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserSuccess, signOutUserStart } from "../redux/user/userSlice";
-
+import {Link} from 'react-router-dom';
 export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -9,7 +9,7 @@ export default function Profile() {
     username: currentUser.username,
     email: currentUser.email,
     avatar: currentUser.avatar,
-  });
+  });const [file, setFile] = useState(undefined);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [uploading, setUploading] = useState(false);
   const dispatch = useDispatch();
@@ -18,30 +18,33 @@ export default function Profile() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // const handleFileUpload = async (file) => {
-  //   setUploading(true);
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("upload_preset", "mern-estate12"); // Replace with your actual upload preset
-  //   formData.append("cloud_name", "dkrtoszgu"); // Replace with your actual cloud name
+
+
+  const handleFileUpload = async (file) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "harsh12345"); // Replace with your actual upload preset
+    formData.append("cloud_name", "dkrtoszgu"); // Replace with your actual cloud name
   
-  //   try {
-  //     const res = await fetch("https://api.cloudinary.com/v1_1/dkrtoszgu/image/upload", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
+    try {
+      const res = await fetch("https://api.cloudinary.com/v1_1/dkrtoszgu/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+      
   
-  //     if (!res.ok) throw new Error("Upload failed");
+      if (!res.ok) throw new Error("Upload failed");
   
-  //     const data = await res.json();
-  //     console.log(data); // Response from Cloudinary
-  //     setFormData((prev) => ({ ...prev, avatar: data.secure_url }));
-  //     setUploading(false);
-  //   } catch (error) {
-  //     console.error("Upload failed", error);
-  //     setUploading(false);
-  //   }
-  // };
+      const data = await res.json();
+      console.log(data); // Response from Cloudinary
+      setFormData((prev) => ({ ...prev, avatar: data.secure_url }));
+      setUploading(false);
+    } catch (error) {
+      console.error("Upload failed", error);
+      setUploading(false);
+    }
+  };
   
 
   const handleSubmit = async (e) => {
@@ -104,13 +107,11 @@ export default function Profile() {
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          type='file'
           ref={fileRef}
           hidden
-          accept="image/*"
-          // onChange={(e) => {
-          //   handleFileUpload(e.target.files[0]);
-          // }}
+          accept='image/*'
         />
         <img
           onClick={() => fileRef.current.click()}
@@ -147,6 +148,10 @@ export default function Profile() {
         >
           {loading || uploading ? "Loading..." : "Update"}
         </button>
+
+        <Link  className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95" to = {"/create-listing"}>
+        Create Listing 
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <button
