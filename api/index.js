@@ -6,7 +6,7 @@ import authRouter from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import listingRouter from './routes/listing.route.js';
 
-
+import cors from 'cors';  
 dotenv.config();
 
 
@@ -23,7 +23,11 @@ mongoose
 
 const app = express();
 const PORT = 3000;
-
+app.use(cors({
+  origin: "http://localhost:5173", // Allow frontend requests
+  methods: "GET,POST,PUT,DELETE", // Allowed HTTP methods
+  credentials: true, // Allow cookies and authentication headers
+}));
 
 app.use(express.json());
 app.use(cookieParser());
