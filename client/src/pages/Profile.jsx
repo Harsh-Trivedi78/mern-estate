@@ -21,30 +21,46 @@ export default function Profile() {
 
 
   const handleFileUpload = async (file) => {
-    setUploading(true);
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+  
     const formData = new FormData();
+    formData.append("UPLOADCARE_PUB_KEY", "c8dd17b6f75e6110c9ee"); // Your Public Key
+    formData.append("UPLOADCARE_STORE", "auto"); // Store file automatically
     formData.append("file", file);
-    formData.append("upload_preset", "harsh12345"); // Replace with your actual upload preset
-    formData.append("cloud_name", "dkrtoszgu"); // Replace with your actual cloud name
   
     try {
-      const res = await fetch("https://api.cloudinary.com/v1_1/dkrtoszgu/image/upload", {
-        method: "POST",
+      const response = await fetch("https://upload.uploadcare.com/base/", {
+        method: "POST", // Ensure this is POST
         body: formData,
       });
+  
+      if (!response.ok) {
+        throw new Error(`Upload failed with status: ${response.status}`);
+      }
+  
+      const data = await response.json();
       
+      if (!data.file) {
+        throw new Error("No file key returned from Uploadcare");
+      }
   
-      if (!res.ok) throw new Error("Upload failed");
+      const uploadedImageUrl = `https://ucarecdn.com/${data.file}/`;
+      console.log("Uploaded Image URL:", uploadedImageUrl);
   
-      const data = await res.json();
-      console.log(data); // Response from Cloudinary
-      setFormData((prev) => ({ ...prev, avatar: data.secure_url }));
-      setUploading(false);
+      // Update the avatar in the formData state
+      setFormData((prev) => ({
+        ...prev,
+        avatar: uploadedImageUrl,
+      }));
+  
     } catch (error) {
-      console.error("Upload failed", error);
-      setUploading(false);
+      console.error("Upload failed:", error);
     }
   };
+  
   
 
   const handleSubmit = async (e) => {
@@ -106,16 +122,17 @@ export default function Profile() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          onChange={(e) => setFile(e.target.files[0])}
-          type='file'
-          ref={fileRef}
-          hidden
-          accept='image/*'
-        />
+      <input
+  type="file"
+  ref={fileRef}
+  hidden
+  accept="image/*"
+  onChange={(e) => handleFileUpload(e.target.files[0])}
+/>
+
         <img
           onClick={() => fileRef.current.click()}
-          src={currentUser.avatar}
+          src={formData.avatar}
           alt="Profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />
