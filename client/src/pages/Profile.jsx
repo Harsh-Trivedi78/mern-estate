@@ -138,7 +138,32 @@ try {
 
 
 
+};
+
+
+const handleListingDelete = async (id) => {
+  try {
+    const res = await fetch(`/api/listing/delete/${id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+    if (data.success === false) {
+      console.error(data.message);
+      return;
+    }
+    setUserListings((prev) => prev.filter((listing) => listing._id !== id));
+  } catch (error) {
+    console.log(error.message);
+    
+  }
 }
+
+
+
+
+
+
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -240,7 +265,7 @@ try {
           <p>{listing.name}</p>
         </Link>
         <div className="flex flex-col items-center space-y-2">
-          <button className="bg-red-700 text-white px-4 py-2 rounded-full border border-red-700">
+          <button onClick={()=>handleListingDelete(listing._id)} className="bg-red-700 text-white px-4 py-2 rounded-full border border-red-700">
             Delete
           </button>
           <button className="bg-green-700 text-white px-4 py-2 rounded-full border border-green-700">
