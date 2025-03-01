@@ -268,10 +268,13 @@ const handleListingDelete = async (id) => {
           <button onClick={()=>handleListingDelete(listing._id)} className="bg-red-700 text-white px-4 py-2 rounded-full border border-red-700">
             Delete
           </button>
-          <button className="bg-green-700 text-white px-4 py-2 rounded-full border border-green-700">
+          <Link to={`/update-listing/${listing._id}`}>
+            
+            <button className="bg-green-700 text-white px-4 py-2 rounded-full border border-green-700">
             Edit
           </button>
-        </div>
+          </Link>
+                  </div>
       </div> 
      ))}
        </div>
