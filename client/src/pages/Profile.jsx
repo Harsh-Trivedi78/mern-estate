@@ -253,7 +253,7 @@ const handleListingDelete = async (id) => {
       >
         <Link to={`/listing/${listing._id}`}>
           <img
-            src={listing.imageUrls}
+            src={listing.imageUrls[0]}
             alt="Listing Cover"
             className="h-16 w-16 object-contain"
           />
