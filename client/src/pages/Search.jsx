@@ -52,7 +52,7 @@ const typeFromUrl = urlParams.get('type');
         const res = await fetch (`/api/listing/get?${searchQuery}`);
         const data = await res.json();
         setListings(data);
-        setLoading(false);
+        setLoading(false);  
 
       };
       fetchListings();  
