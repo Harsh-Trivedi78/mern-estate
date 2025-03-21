@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserSuccess, signOutUserStart } from "../redux/user/userSlice";
 import {Link} from 'react-router-dom';
 export default function Profile() {
   const fileRef = useRef(null);
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     username: currentUser.username,
@@ -16,53 +18,82 @@ export default function Profile() {
   
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (!window.cloudinary) {
+      console.error("Cloudinary widget is not loaded. Make sure to include the script.");
+      return;
+    }
 
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: "doeoer5zm", // Your Cloudinary Cloud Name
+        uploadPreset: "test-upload", // Your Upload Preset
+        maxFiles: 1,
+        sources: ["local", "url", "camera"],
+        cropping: true,
+        folder: "profile_pictures",
+      },
+      (err, result) => {
+        if (err) {
+          console.error("Upload error:", err);
+          return;
+        }
+        if (result.event === "success") {
+          setFormData((prev) => ({
+            ...prev,
+            avatar: result.info.secure_url, // Update the avatar URL
+          }));
+        }
+      }
+    );
+  }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
 
 
-  const handleFileUpload = async (file) => {
-    if (!file) {
-      console.error("No file selected");
-      return;
-    }
+  // const handleFileUpload = async (file) => {
+  //   if (!file) {
+  //     console.error("No file selected");
+  //     return;
+  //   }
   
-    const formData = new FormData();
-    formData.append("UPLOADCARE_PUB_KEY", "c8dd17b6f75e6110c9ee"); // Your Public Key
-    formData.append("UPLOADCARE_STORE", "auto"); // Store file automatically
-    formData.append("file", file);
+  //   const formData = new FormData();
+  //   formData.append("UPLOADCARE_PUB_KEY", "c8dd17b6f75e6110c9ee"); // Your Public Key
+  //   formData.append("UPLOADCARE_STORE", "auto"); // Store file automatically
+  //   formData.append("file", file);
   
-    try {
-      const response = await fetch("https://upload.uploadcare.com/base/", {
-        method: "POST", // Ensure this is POST
-        body: formData,
-      });
+  //   try {
+  //     const response = await fetch("https://upload.uploadcare.com/base/", {
+  //       method: "POST", // Ensure this is POST
+  //       body: formData,
+  //     });
   
-      if (!response.ok) {
-        throw new Error(`Upload failed with status: ${response.status}`);
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`Upload failed with status: ${response.status}`);
+  //     }
   
-      const data = await response.json();
+  //     const data = await response.json();
       
-      if (!data.file) {
-        throw new Error("No file key returned from Uploadcare");
-      }
+  //     if (!data.file) {
+  //       throw new Error("No file key returned from Uploadcare");
+  //     }
   
-      const uploadedImageUrl = `https://ucarecdn.com/${data.file}/`;
-      console.log("Uploaded Image URL:", uploadedImageUrl);
+  //     const uploadedImageUrl = `https://ucarecdn.com/${data.file}/`;
+  //     console.log("Uploaded Image URL:", uploadedImageUrl);
   
-      // Update the avatar in the formData state
-      setFormData((prev) => ({
-        ...prev,
-        avatar: uploadedImageUrl,
-      }));
+  //     // Update the avatar in the formData state
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       avatar: uploadedImageUrl,
+  //     }));
   
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-  };
+  //   } catch (error) {
+  //     console.error("Upload failed:", error);
+  //   }
+  // };
   
   
 
@@ -176,8 +207,8 @@ const handleListingDelete = async (id) => {
   onChange={(e) => handleFileUpload(e.target.files[0])}
 />
 
-        <img
-          onClick={() => fileRef.current.click()}
+<img
+          onClick={() => widgetRef.current?.open()} // Open Cloudinary widget on click
           src={formData.avatar}
           alt="Profile"
           className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
