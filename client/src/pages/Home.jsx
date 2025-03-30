@@ -53,14 +53,26 @@ fetchOfferListings();
   return (
     <div  >
      {/* top */}
-    <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
-    <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>
+<div className='flex flex-col gap-10 p-28 px-5 max-w-7xl mx-auto  relative bg-cover bg-right  bg-no-repeat'
+    style={{
+      backgroundImage: "url('https://i.pinimg.com/736x/6b/34/a5/6b34a55175a40036697f51ddeb1895dc.jpg')",
+      backgroundSize: 'contain',
+      backgroundPosition: 'right center', // Moves the image to the right
+      backgroundRepeat: 'no-repeat',
+      width: '100%',
+    }}
+
+    
+    >
+    <h1 className='text-blue-800 font-extrabold text-3xl lg:text-6xl'>
       Find your Next <span>Perfect</span> 
       <br />
       Place With Ease.
     </h1>
-    <div  className='text-gray-400 text-xs sm:text-sm'>
-    From cozy apartments to luxury villas, EstateFinder brings you the best real estate options in one place.
+    <div  className='text-black text-lg font-semibold sm:text-sm'>
+    From cozy apartments to luxury villas, EstateFinder brings you the 
+    <br />
+    best real estate options in one place.
     <br/>
     We have a wide range of properties to suit your needs.
     </div>
@@ -80,17 +92,23 @@ fetchOfferListings();
 
 
      {/* swiper */}
-     <Swiper navigation>
+     <Swiper navigation 
+     >
   {offerListings &&
     offerListings.length > 0 &&
     offerListings.map((listing) => (
       <SwiperSlide key={listing._id}>
         <div
-          style={{
-            background: `url(${listing.imageUrls[0]}) center no-repeat`,
-            backgroundSize: 'cover',
-          }}
-          className='h-[500px]'
+        style={{
+          background: `url(${listing.imageUrls[0]}) center no-repeat`,
+          backgroundSize: 'cover',
+          maxWidth: '1200px', // Adjust width as needed
+          height: '500px',  // Adjust height to shrink the area
+          margin: '0 auto', // Centers the container
+        }}
+        
+        
+           className='h-[500px]'
         ></div>
       </SwiperSlide>
     ))}
@@ -101,12 +119,12 @@ fetchOfferListings();
 
      {/* listingresults for offer and sale */}
     
-     <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
+     <div className='max-w-9xl mx-auto p-3 flex flex-col gap-8 my-10'>
         {offerListings && offerListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>Recent offers</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
+              <h2 className='text-4xl font-extrabold text-slate-600'>Recent offers</h2>
+              <Link className='text-lg font-semibold text-blue-800 hover:underline' to={'/search?offer=true'}>Show more offers</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
               {offerListings.map((listing) => (
@@ -118,8 +136,8 @@ fetchOfferListings();
         {rentListings && rentListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>Show more places for rent</Link>
+              <h2 className='text-4xl font-extrabold text-slate-600'>Recent places for rent</h2>
+              <Link className='text-lg font-semibold text-blue-800 hover:underline' to={'/search?type=rent'}>Show more places for rent</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
               {rentListings.map((listing) => (
@@ -131,8 +149,8 @@ fetchOfferListings();
         {saleListings && saleListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sale</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=sale'}>Show more places for sale</Link>
+              <h2 className='text-4xl font-extrabold text-slate-600'>Recent places for sale</h2>
+              <Link className='text-lg font-semibold text-blue-800 hover:underline' to={'/search?type=sale'}>Show more places for sale</Link>
             </div>
             <div className='flex flex-wrap gap-4'>
               {saleListings.map((listing) => (

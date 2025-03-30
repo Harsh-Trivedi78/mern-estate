@@ -287,6 +287,9 @@ const handleListingDelete = async (id) => {
             src={listing.imageUrls[0]}
             alt="Listing Cover"
             className="h-16 w-16 object-contain"
+            onError={(e) => {
+              e.target.src = "https://t3.ftcdn.net/jpg/09/64/89/20/360_F_964892089_vioRltmAxaoQEBLtYtChVBxIzDWwhA3T.jpg"; 
+            }}
           />
         </Link>
         <Link

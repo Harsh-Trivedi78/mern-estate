@@ -133,7 +133,9 @@ const onShowMoreClick =async () => {
 
 };
     return (
-        <div className='flex flex-col md:flex-row'>
+        <div className="flex flex-col md:flex-row rounded-lg">
+
+
         <div className="p-7 border-b-2 md:border-r-2 min-h-screen">
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
             <div className="flex items-center gap-2 ">
@@ -239,7 +241,7 @@ const onShowMoreClick =async () => {
         
         <div className='flex-1'>
     <h1 className='text-3xl font-bold border-b p-3 text-slate-700 mt-5'>
-        Listing Results:
+        Featured Listings:
     </h1>
 
     <div className='p-7 flex flex-wrap gap-4'>
