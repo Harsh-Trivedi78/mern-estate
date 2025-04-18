@@ -30,6 +30,7 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 - React Router
 - Tailwind CSS
 - Firebase (Image Upload)
+- Cloudinary
 
 ### Backend
 - Node.js
@@ -42,21 +43,28 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 
 ## 📁 Project Structure
 
+mern-estate/
+│
+├── backend/                     # Express server and API logic
+│   ├── controllers/             # Route controller functions (auth, listings, etc.)
+│   ├── models/                  # Mongoose schemas for User, Listing
+│   ├── middleware/              # JWT authentication middleware
+│   ├── routes/                  # API routes for authentication and listings
+│   └── server.js                # Entry point for the backend server
+│
+├── frontend/                    # React application
+│   ├── src/
+│   │   ├── assets/              # Images and static assets
+│   │   ├── components/          # Reusable UI components (Navbar, ListingCard, etc.)
+│   │   ├── pages/               # Page-level components (Home, SignIn, SignUp, etc.)
+│   │   ├── App.js               # Main app component with routing
+│   │   └── index.js             # React entry point
+│
+├── .gitignore                   # Git ignored files
+├── package.json                 # Project metadata and dependencies
+└── README.md                    # Project documentation
 
----
 
-## 🌐 Live Demo
-
-🔗 [View the Live Site](https://nutri-116fc.web.app/)  
-🔗 [Project Repository](https://github.com/Harsh-Trivedi78/mern-estate)
-
----
-
-## 📸 Screenshots
-
-> *(Add images in the repo or link externally to showcase UI)*
-
----
 
 ## 👨‍💻 Author
 
@@ -65,11 +73,4 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 🔗 [Portfolio](https://harsh-trivedi78.github.io/Portfolio)  
 🐙 [GitHub](https://github.com/Harsh-Trivedi78)
 
----
-
-## 📝 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
 
