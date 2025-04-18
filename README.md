@@ -42,6 +42,7 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 ---
 
 ## 📁 Project Structure
+
 mern-estate/
 ├── backend/                     # Express server and API logic
 │   ├── controllers/             # Route controller functions (auth, listings, etc.)
@@ -61,6 +62,7 @@ mern-estate/
 ├── .gitignore                   # Git ignored files
 ├── package.json                 # Project metadata and dependencies
 └── README.md                    # Project documentation
+
 
 
 
