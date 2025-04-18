@@ -42,9 +42,7 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 ---
 
 ## 📁 Project Structure
-
 mern-estate/
-│
 ├── backend/                     # Express server and API logic
 │   ├── controllers/             # Route controller functions (auth, listings, etc.)
 │   ├── models/                  # Mongoose schemas for User, Listing
@@ -53,16 +51,17 @@ mern-estate/
 │   └── server.js                # Entry point for the backend server
 │
 ├── frontend/                    # React application
-│   ├── src/
-│   │   ├── assets/              # Images and static assets
-│   │   ├── components/          # Reusable UI components (Navbar, ListingCard, etc.)
-│   │   ├── pages/               # Page-level components (Home, SignIn, SignUp, etc.)
-│   │   ├── App.js               # Main app component with routing
-│   │   └── index.js             # React entry point
+│   └── src/
+│       ├── assets/              # Images and static assets
+│       ├── components/          # Reusable UI components (Navbar, ListingCard, etc.)
+│       ├── pages/               # Page-level components (Home, SignIn, SignUp, etc.)
+│       ├── App.js               # Main app component with routing
+│       └── index.js             # React entry point
 │
 ├── .gitignore                   # Git ignored files
 ├── package.json                 # Project metadata and dependencies
 └── README.md                    # Project documentation
+
 
 
 
