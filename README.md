@@ -44,7 +44,7 @@ MERN Estate is a modern, full-stack real estate platform built with the MERN sta
 
 **Harsh Trivedi**  
 📧 [trivediharsh346@gmail.com](mailto:trivediharsh346@gmail.com)  
-🔗 [Portfolio]([https://harshportf.netlify.app/])  
+🔗 [Portfolio](https://harshportf.netlify.app/)  
 🐙 [GitHub](https://github.com/Harsh-Trivedi78)
 
 
